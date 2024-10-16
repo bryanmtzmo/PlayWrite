@@ -33,13 +33,27 @@ test('getByRole', async ({ page }) => {
   const itemsContainer= await page.locator('#inventory_container .inventory_item').all()
   const randomIndex=Math.floor(Math.random()*itemsContainer.length)
   const randomItem= itemsContainer[randomIndex]
-
   const  expectDescription= await randomItem.locator('.inventory_item_desc').innerText()
   const  expectName= await randomItem.locator('.inventory_item_name').innerText()
   const  expectPrice= await randomItem.locator('.inventory_item_price').innerText()
-
   console.log(`Precio: ${expectPrice} Nombre: ${expectName} Descripcion: ${expectDescription}`)
 
-  //await page.pause()
+   //hacer clic aleatoriamente y agregar al carrito
+   await randomItem.getByRole("button",{name:"Add to cart",exact:true}).click()
+   await page.locator('a.shopping_cart_link').click()
+
+   expect(page.getByRole("button",{name:"Checkout",exact:true})).toBeVisible()
+
+
+   //comparar si es el producto correcto.
+   const  actualDescription= await page.locator('.inventory_item_desc').innerText()
+   const  actualName= await page.locator('.inventory_item_name').innerText()
+   const  actualPrice= await page.locator('.inventory_item_price').innerText()
+
+   expect(actualDescription).toEqual(expectDescription)
+   expect(actualName).toEqual(actualName)
+   expect(actualPrice).toEqual(expectPrice)
+   await page.pause()
+   
  });
  
