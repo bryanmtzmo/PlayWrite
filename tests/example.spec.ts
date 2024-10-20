@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from './PageObject/LoginPage';
 
 
 test('script', async ({ page }) => {
@@ -23,12 +24,24 @@ test('getByRole', async ({ page }) => {
  });
  
 
+
+
  test('CarritoDeCompras', async ({ page }) => {
   //login
   await page.goto('https://www.saucedemo.com/')
+
+/*
   await page.getByRole("textbox",{name:"Username",exact:true}).fill("standard_user")
   await page.getByRole("textbox",{name:"Password",exact:true}).fill("secret_sauce")
-  await page.getByRole("button",{name:"Login",exact:true}).click()
+  await page.getByRole("button",{name:"Login",exact:true}).click()*/
+  
+  const ingreso =new LoginPage(page)
+  await ingreso.fillUsername()
+  await ingreso.fillPassword()
+  await ingreso.clicOnLogin()
+
+
+
   //seleccion aleatoria
   const itemsContainer= await page.locator('#inventory_container .inventory_item').all()
   const randomIndex=Math.floor(Math.random()*itemsContainer.length)
