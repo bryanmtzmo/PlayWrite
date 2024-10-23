@@ -88,3 +88,9 @@ test('getByRole', async ({ page }) => {
   await ingreso.checkSuccessfulLogin()
 
  });
+
+ test('Variable Entorno', async ({ page }) => {
+
+  await page.goto(process.env.URL)
+  await page.pause
+ });
