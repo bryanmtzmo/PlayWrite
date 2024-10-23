@@ -36,8 +36,8 @@ test('getByRole', async ({ page }) => {
   await page.getByRole("button",{name:"Login",exact:true}).click()*/
   
   const ingreso =new LoginPage(page)
-  await ingreso.fillUsername()
-  await ingreso.fillPassword()
+  await ingreso.fillUsername('standar_user')
+  await ingreso.fillPassword('secre_sauce')
   await ingreso.clicOnLogin()
 
 
@@ -70,3 +70,21 @@ test('getByRole', async ({ page }) => {
    
  });
  
+ test('Comprar Producto', async ({ page }) => {
+
+  await page.goto('https://www.saucedemo.com/')
+  const ingreso =new LoginPage(page)
+  await ingreso.fillUsername('standard_user')
+  await ingreso.fillPassword('secret_sauce')
+  await ingreso.clicOnLogin()
+
+ });
+ 
+ test('Login en Pagina', async ({ page }) => {
+
+  await page.goto('https://www.saucedemo.com/')
+  const ingreso =new LoginPage(page)
+  await ingreso.loginWithCredentials('standard_user','secret_sauce')
+  await ingreso.checkSuccessfulLogin()
+
+ });
